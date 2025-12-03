@@ -1,0 +1,28 @@
+{
+  "name": "swagger-ts-generator-backend",
+  "version": "1.0.0",
+  "description": "Backend server for Swagger TypeScript Generator",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "keywords": ["swagger", "typescript", "generator", "openapi"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0",
+    "cors": "^2.8.5",
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/express": "^5.0.0",
+    "@types/cors": "^2.8.17",
+    "typescript": "^5.7.2",
+    "ts-node": "^10.9.2",
+    "nodemon": "^3.1.7"
+  }
+}

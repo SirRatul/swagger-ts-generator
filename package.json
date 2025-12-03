@@ -1,0 +1,29 @@
+{
+  "name": "swagger-ts-generator",
+  "version": "1.0.0",
+  "description": "Swagger TypeScript Generator - Full Stack Application",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "keywords": [
+    "swagger",
+    "typescript",
+    "generator",
+    "openapi",
+    "full-stack"
+  ],
+  "author": "",
+  "license": "MIT"
+}
