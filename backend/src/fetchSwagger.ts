@@ -16,8 +16,12 @@ export async function fetchSwaggerJson(swaggerUrl: string, authHeader?: string):
       headers['Authorization'] = authHeader;
     }
 
+		const axiosInstance = axios.create({
+			timeout: 10_000, // 10 seconds
+		});
+
     // Step 1: Fetch the HTML page
-    const htmlResponse = await axios.get(swaggerUrl, { headers });
+    const htmlResponse = await axiosInstance.get(swaggerUrl, { headers });
 
     const html = htmlResponse.data;
     const $ = cheerio.load(html);
@@ -112,7 +116,7 @@ export async function fetchSwaggerJson(swaggerUrl: string, authHeader?: string):
     }
 
     // Step 4: Fetch the JSON specification
-    const jsonResponse = await axios.get(fullJsonUrl, {
+    const jsonResponse = await axiosInstance.get(fullJsonUrl, {
       headers: {
         ...headers,
         'Accept': 'application/json',
@@ -130,6 +134,10 @@ export async function fetchSwaggerJson(swaggerUrl: string, authHeader?: string):
 
     return swaggerJson;
   } catch (error: any) {
+		if (error.code === 'ECONNABORTED') {
+			throw new Error('Request timed out while trying to reach the Swagger URL.');
+		}
+
     if (error.response) {
       throw new Error(
         `Failed to fetch Swagger specification: ${error.response.status} ${error.response.statusText}`
