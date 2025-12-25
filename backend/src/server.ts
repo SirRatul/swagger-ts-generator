@@ -3,6 +3,7 @@ import express, {
 	Response 
 } from 'express';
 import cors from 'cors';
+import 'dotenv/config';
 import { fetchSwaggerJson } from './fetchSwagger';
 import { parseEndpoints } from './parser';
 import { generateTypeScript } from './generator';

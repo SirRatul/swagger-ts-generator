@@ -8,21 +8,27 @@
     "build": "tsc",
     "start": "node dist/server.js"
   },
-  "keywords": ["swagger", "typescript", "generator", "openapi"],
+  "keywords": [
+    "swagger",
+    "typescript",
+    "generator",
+    "openapi"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^5.1.0",
-    "cors": "^2.8.5",
     "axios": "^1.7.9",
-    "cheerio": "^1.0.0"
+    "cheerio": "^1.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
   },
   "devDependencies": {
-    "@types/node": "^22.10.2",
-    "@types/express": "^5.0.0",
     "@types/cors": "^2.8.17",
-    "typescript": "^5.7.2",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
-    "nodemon": "^3.1.7"
+    "typescript": "^5.7.2"
   }
 }
