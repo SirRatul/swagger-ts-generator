@@ -23,8 +23,32 @@ export interface FetchSwaggerResponse {
   swaggerJson: any;
 }
 
+
 export interface GenerateResponse {
   typescript: string;
+}
+
+export interface ComparisonError {
+  path: string;
+  type: 'missing' | 'type_mismatch' | 'extra' | 'invalid_value';
+  expected?: any;
+  actual?: any;
+  message: string;
+}
+
+export interface ComparisonResult {
+  isValid: boolean;
+  errors: ComparisonError[];
+  summary: {
+    totalErrors: number;
+    missingCount: number;
+    typeMismatchCount: number;
+    extraCount: number;
+  };
+}
+
+export interface CompareResponse {
+  comparison: ComparisonResult;
 }
 
 export async function fetchSwaggerEndpoints(url: string, authHeader?: string): Promise<FetchSwaggerResponse> {
@@ -41,6 +65,21 @@ export async function generateTypeScript(
     selectedEndpoints,
     allEndpoints,
     swaggerJson,
+  });
+  return response.data;
+}
+
+export async function compareResponse(
+  endpointId: string,
+  userResponse: any,
+  swaggerJson: any,
+  endpoints: Endpoint[]
+): Promise<CompareResponse> {
+  const response = await apiClient.post<CompareResponse>('/api/compare-response', {
+    endpointId,
+    userResponse,
+    swaggerJson,
+    endpoints,
   });
   return response.data;
 }

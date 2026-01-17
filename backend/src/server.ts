@@ -109,6 +109,65 @@ app.post('/api/generate', async (req: Request, res: Response) => {
   }
 });
 
+// Compare user response with schema
+app.post('/api/compare-response', async (req: Request, res: Response) => {
+  try {
+    const { endpointId, userResponse, swaggerJson, endpoints } = req.body;
+
+    if (!endpointId) {
+      return res.status(400).json({ 
+        error: 'Endpoint ID is required' 
+      });
+    }
+
+    if (userResponse === undefined || userResponse === null) {
+      return res.status(400).json({ 
+        error: 'User response is required' 
+      });
+    }
+
+    if (!swaggerJson) {
+      return res.status(400).json({ 
+        error: 'Swagger JSON is required' 
+      });
+    }
+
+    if (!endpoints || !Array.isArray(endpoints)) {
+      return res.status(400).json({ 
+        error: 'Endpoints array is required' 
+      });
+    }
+
+    // Find the selected endpoint
+    const endpoint = endpoints.find(ep => ep.id === endpointId);
+    if (!endpoint) {
+      return res.status(404).json({ 
+        error: 'Endpoint not found' 
+      });
+    }
+
+    // Import the comparison function
+    const { compareResponse } = await import('./compareResponse');
+
+    // Get the response schema
+    const responseSchema = endpoint.responseSchema;
+    if (!responseSchema) {
+      return res.status(400).json({ 
+        error: 'No response schema found for this endpoint' 
+      });
+    }
+
+    // Perform comparison
+    const comparison = compareResponse(userResponse, responseSchema, swaggerJson);
+
+    res.json({ comparison });
+  } catch (error: any) {
+    res.status(500).json({ 
+      error: error.message || 'Failed to compare response' 
+    });
+  }
+});
+
 // Start server
 app.listen(PORT, () => {
   // Server is running

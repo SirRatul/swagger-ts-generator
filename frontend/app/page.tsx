@@ -11,6 +11,7 @@ import {
 	generateTypeScript, 
 	Endpoint 
 } from '../lib/api';
+import ResponseComparison from '../components/ResponseComparison';
 
 export default function Home() {
   const [endpoints, setEndpoints] = useState<Endpoint[]>([]);
@@ -138,6 +139,10 @@ export default function Home() {
           )}
 
           {generatedCode && <OutputViewer code={generatedCode} />}
+
+          {generatedCode && endpoints.length > 0 && swaggerJson && (
+            <ResponseComparison endpoints={endpoints} swaggerJson={swaggerJson} />
+          )}
         </div>
 
         {/* Footer */}
