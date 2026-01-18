@@ -28,27 +28,23 @@ export interface GenerateResponse {
   typescript: string;
 }
 
-export interface ComparisonError {
-  path: string;
-  type: 'missing' | 'type_mismatch' | 'extra' | 'invalid_value';
-  expected?: any;
-  actual?: any;
-  message: string;
+export interface DiffItem {
+  name: string;
+  type?: string; 
+  description?: string;
+  expectedType?: string;
+  actualType?: string;
 }
 
 export interface ComparisonResult {
-  isValid: boolean;
-  errors: ComparisonError[];
-  summary: {
-    totalErrors: number;
-    missingCount: number;
-    typeMismatchCount: number;
-    extraCount: number;
-  };
+  added: { name: string; type: string; description?: string }[];
+  removed: { name: string; type: string }[];
+  modified: { name: string; expectedType: string; actualType: string }[];
 }
 
-export interface CompareResponse {
+export interface CompareSwaggerVsTsResponse {
   comparison: ComparisonResult;
+  selectedInterfaceName: string;
 }
 
 export async function fetchSwaggerEndpoints(url: string, authHeader?: string): Promise<FetchSwaggerResponse> {
@@ -69,17 +65,21 @@ export async function generateTypeScript(
   return response.data;
 }
 
-export async function compareResponse(
+
+
+export async function compareSwaggerVsTs(
   endpointId: string,
-  userResponse: any,
+  tsCode: string,
   swaggerJson: any,
-  endpoints: Endpoint[]
-): Promise<CompareResponse> {
-  const response = await apiClient.post<CompareResponse>('/api/compare-response', {
+  endpoints: Endpoint[],
+  comparisonType: 'request' | 'response' = 'response'
+): Promise<CompareSwaggerVsTsResponse> {
+  const response = await apiClient.post<CompareSwaggerVsTsResponse>('/api/compare-swagger-vs-ts', {
     endpointId,
-    userResponse,
+    tsCode,
     swaggerJson,
     endpoints,
+    comparisonType,
   });
   return response.data;
 }

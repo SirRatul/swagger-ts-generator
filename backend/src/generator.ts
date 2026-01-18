@@ -165,7 +165,7 @@ function schemaToTypeScript(
       return schema.enum.map((v: string) => `'${v}'`).join(' | ');
     }
     if (schema.format === 'date' || schema.format === 'date-time') {
-      return 'string'; // Could use Date but string is safer for JSON
+      return 'Date'; // User preference: use Date for date-time
     }
     return 'string';
   }

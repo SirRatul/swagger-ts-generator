@@ -11,7 +11,7 @@ import {
 	generateTypeScript, 
 	Endpoint 
 } from '../lib/api';
-import ResponseComparison from '../components/ResponseComparison';
+import InterfaceComparator from '../components/InterfaceComparator';
 
 export default function Home() {
   const [endpoints, setEndpoints] = useState<Endpoint[]>([]);
@@ -128,7 +128,15 @@ export default function Home() {
 
         {/* Main Content */}
         <div className="space-y-6 sm:space-y-8">
-          <UrlInput onFetch={handleFetchEndpoints} loading={fetchLoading} />
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-2">
+              ⚡ TypeScript Interface Generator
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base mb-4">
+              Generate TypeScript interfaces from your Swagger/OpenAPI URL.
+            </p>
+            <UrlInput onFetch={handleFetchEndpoints} loading={fetchLoading} />
+          </div>
 
           {endpoints.length > 0 && (
             <EndpointSelector
@@ -140,12 +148,16 @@ export default function Home() {
 
           {generatedCode && <OutputViewer code={generatedCode} />}
 
-          {generatedCode && endpoints.length > 0 && swaggerJson && (
-            <ResponseComparison endpoints={endpoints} swaggerJson={swaggerJson} />
+          {/* New Interface Comparator Section */}
+          {endpoints.length > 0 && (
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-8 mt-8">
+               <InterfaceComparator endpoints={endpoints} swaggerJson={swaggerJson} />
+            </div>
           )}
         </div>
 
         {/* Footer */}
+
         <footer className="mt-12 sm:mt-16 text-center text-gray-600 dark:text-gray-400">
           <p className="text-sm">
             Built with ❤️ using Next.js, TypeScript, and TailwindCSS

@@ -14,6 +14,9 @@ A full-stack TypeScript application that extracts Swagger/OpenAPI specifications
 - ✅ **Selective Generation** - Choose which endpoints to generate types for
 - 🎨 **Beautiful UI** - Modern, responsive interface with TailwindCSS
 - 📦 **Request/Response Types** - Generates both request and response interfaces
+- ⚖️ **TypeScript Comparator** - Validates your manually written interfaces against the Swagger spec
+- 🔄 **Recursive Comparison** - Detailed diffing for nested objects to catch deep discrepancies
+- 📅 **Smart Type Matching** - Supports `Date` for date-time and flexible `integer`/`number` matching
 - 💾 **Download & Copy** - Export generated code as `.ts` files or copy to clipboard
 - 🎯 **Syntax Highlighting** - Beautiful code viewer with TypeScript highlighting
 
@@ -26,10 +29,10 @@ A full-stack TypeScript application that extracts Swagger/OpenAPI specifications
 - **Cheerio** - HTML parsing to extract JSON URLs
 
 ### Frontend
-- **Next.js 14** - React framework with App Router
+- **Next.js 16** - React framework with App Router
 - **TypeScript** - Type-safe frontend code
 - **TailwindCSS** - Utility-first CSS framework
-- **React Syntax Highlighter** - Code syntax highlighting
+- **Monaco Editor** - VS Code-like editor for viewing and editing code
 
 ## 📦 Installation
 
@@ -92,6 +95,13 @@ The frontend will start on **http://localhost:3000**
 - View the generated TypeScript interfaces
 - Click "📋 Copy" to copy to clipboard
 - Or click "💾 Download .ts" to save as a file
+
+### Step 4: Check Interface Compliance (Optional)
+- Use the **TypeScript Interface Generator** section below the generator
+- Select an endpoint and choose **Request** or **Response** comparison mode
+- Paste your manually written TypeScript interface
+- Click **Compare Interfaces**
+- View detailed report of **Missing**, **Extra**, and **Mismatch** fields (supports recursive object checking)
 
 ## 📋 Example
 
@@ -178,25 +188,33 @@ NEXT_PUBLIC_API_URL=http://localhost:5000
 swagger-ts-generator/
 ├── backend/
 │   ├── src/
-│   │   ├── server.ts          # Express server
-│   │   ├── fetchSwagger.ts    # HTML parsing & JSON extraction
-│   │   ├── parser.ts          # Endpoint parsing
-│   │   ├── generator.ts       # TypeScript code generation
-│   │   └── types.ts           # Shared types
+│   │   ├── server.ts               # Express server with API routes
+│   │   ├── fetchSwagger.ts         # HTML parsing & JSON extraction
+│   │   ├── parser.ts               # Swagger Endpoint parsing
+│   │   ├── generator.ts            # TypeScript code generation (with Date support)
+│   │   ├── tsParser.ts             # TypeScript AST parser
+│   │   ├── schemaComparator.ts     # Recursive Schema vs Interface diffing
+│   │   ├── compareResponse.ts      # JSON Response comparison logic
+│   │   └── types.ts                # Shared typings
 │   ├── package.json
 │   └── tsconfig.json
 │
 ├── frontend/
 │   ├── app/
-│   │   ├── page.tsx           # Main application page
-│   │   ├── layout.tsx         # Root layout
-│   │   └── globals.css        # Global styles
+│   │   ├── page.tsx                # Main application page
+│   │   ├── layout.tsx              # Root layout
+│   │   └── globals.css             # Global styles
 │   ├── components/
-│   │   ├── UrlInput.tsx       # URL input component
-│   │   ├── EndpointSelector.tsx  # Endpoint selection
-│   │   └── OutputViewer.tsx   # Code viewer
+│   │   ├── UrlInput.tsx            # URL input component
+│   │   ├── EndpointSelector.tsx    # Endpoint selection UI
+│   │   ├── InterfaceComparator.tsx # New: TS Interface Comparison UI
+│   │   ├── OutputViewer.tsx        # Code viewer with syntax highlighting
+│   │   ├── ResponseComparison.tsx  # JSON Response Validation
+│   │   ├── LoadingOverlay.tsx      # Loading state component
+│   │   ├── ThemeProvider.tsx       # Dark/Light mode provider
+│   │   └── ThemeToggle.tsx         # Theme switch button
 │   ├── lib/
-│   │   └── api.ts             # API client
+│   │   └── api.ts                  # API client (Axios wrapper)
 │   ├── package.json
 │   ├── tsconfig.json
 │   ├── tailwind.config.js
