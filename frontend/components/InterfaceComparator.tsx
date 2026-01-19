@@ -130,26 +130,28 @@ export default function InterfaceComparator({
       </div>
 
       <div className="mb-6">
-        <div className="flex items-center gap-6 mb-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="flex flex-col sm:flex-row sm:items-center items-start gap-3 sm:gap-6 mb-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Compare Type:</span>
-           <label className="flex items-center cursor-pointer">
-             <input 
-               type="radio" 
-               checked={comparisonType === 'response'} 
-               onChange={() => setComparisonType('response')}
-               className="w-4 h-4 text-primary-600 focus:ring-primary-500 border-gray-300"
-             />
-             <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Response</span>
-           </label>
-           <label className="flex items-center cursor-pointer">
-             <input 
-               type="radio" 
-               checked={comparisonType === 'request'} 
-               onChange={() => setComparisonType('request')}
-               className="w-4 h-4 text-primary-600 focus:ring-primary-500 border-gray-300"
-             />
-             <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Request Payload</span>
-           </label>
+           <div className="flex items-center gap-6">
+               <label className="flex items-center cursor-pointer">
+                 <input 
+                   type="radio" 
+                   checked={comparisonType === 'response'} 
+                   onChange={() => setComparisonType('response')}
+                   className="w-4 h-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                 />
+                 <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Response</span>
+               </label>
+               <label className="flex items-center cursor-pointer">
+                 <input 
+                   type="radio" 
+                   checked={comparisonType === 'request'} 
+                   onChange={() => setComparisonType('request')}
+                   className="w-4 h-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                 />
+                 <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Request Payload</span>
+               </label>
+           </div>
         </div>
 
         <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">1. Select Endpoint</h3>
