@@ -209,7 +209,6 @@ swagger-ts-generator/
 │   │   ├── EndpointSelector.tsx    # Endpoint selection UI
 │   │   ├── InterfaceComparator.tsx # New: TS Interface Comparison UI
 │   │   ├── OutputViewer.tsx        # Code viewer with syntax highlighting
-│   │   ├── ResponseComparison.tsx  # JSON Response Validation
 │   │   ├── LoadingOverlay.tsx      # Loading state component
 │   │   ├── ThemeProvider.tsx       # Dark/Light mode provider
 │   │   └── ThemeToggle.tsx         # Theme switch button
